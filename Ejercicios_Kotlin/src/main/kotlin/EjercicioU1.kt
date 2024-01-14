@@ -557,13 +557,36 @@ fun iterativa08() {
  * Escribir un programa que muestre el eco de todo lo que el usuario introduzca
  * hasta que el usuario escriba “salir” que terminará.
  */
-fun iterativa13(){}
+fun iterativa13(){
+    while (true){
+        println("Escribe algo (o 'salir' para terminar): ")
+        val eco = readln()
+        if (eco.lowercase() != "salir") println(eco) else return
+    }
+}
 
 /**
  * Leer números enteros de teclado, hasta que el usuario ingrese el 0. Finalmente,
  * mostrar la sumatoria de todos los números positivos ingresados.
  */
-fun iterativa15(){}
+fun iterativa15(){
+    var sumatoria = 0
+    while (true){
+        println("Ingresa un número entero (o 0 para terminar): ")
+
+        try {
+            val num = readln()!!.toInt()
+            if (num != 0) sumatoria += num else {
+                println("La sumatoria de los números positivos ingresados es: $sumatoria")
+                return
+            }
+
+        } catch (e: NumberFormatException) {
+            println("Caracter no valido... $e")
+        }
+    }
+
+}
 
 /**
  * Solicitar al usuario que ingrese números enteros positivos y, por cada uno,
@@ -571,7 +594,22 @@ fun iterativa15(){}
  * se ingrese el número -1. Al finalizar, mostrar cuántos de los números ingresados
  * por el usuario fueron números pares.
  */
-fun iterativa18(){}
+fun iterativa18(){
+    var pares = 0
+    while (true){
+        print("Ingresa un número entero positivo (o -1 para terminar): ")
+        val num = readln()!!.toInt()
+
+        if (num == -1) return
+        if (num < 0 ) {
+            print("El número ingresado no es positivo.")
+            continue
+        }
+        if (num % 2 == 0) pares++
+        val suma = num.toString().map {it.toString().toInt()}.sum()
+        println("Has ingresado $pares números pares.")
+    }
+}
 
 /**
  * Mostrar un menú con tres opciones: 1- comenzar programa, 2- imprimir listado,
@@ -581,7 +619,24 @@ fun iterativa18(){}
  * elige las opciones 1 ó 2 se imprimirá un texto. Si elige la opción 3, se interrumpirá
  * la impresión del menú y el programa finalizará.
  */
-fun iterativa19(){}
+fun iterativa19(){
+    var opcion: Int
+    do {
+        println("Menú:")
+        println("1- Comenzar programa")
+        println("2- Imprimir listado")
+        println("3- Finalizar programa")
+        print("Elige una opción (1, 2, 3): ")
+        opcion = readln()!!.toInt()
+
+        when (opcion) {
+            1 -> println("Has elegido comenzar el programa.")
+            2 -> println("Has elegido imprimir el listado.")
+            3 -> println("Has elegido finalizar el programa.")
+            else -> println("Opción incorrecta. Por favor, elige 1, 2 o 3.")
+        }
+    } while (opcion != 3)
+}
 
 /**
  * Solicitar al usuario que ingrese una frase y luego informar cuál fue la palabra más
@@ -589,33 +644,93 @@ fun iterativa19(){}
  * Precondición: se tomará como separador de palabras al carácter “ “ (espacio), ya
  * sea uno o más.
  */
-fun iterativa25(){}
+fun iterativa25(){
+    println("Ingrese una frase: ")
+    val frase = readLine()!!.split(" ").filter { it.isNotEmpty() }
+    val palabraMasLarga = frase.maxByOrNull { it.length }
+    println("La palabra más larga es '${palabraMasLarga}', y la frase tiene ${frase.size} palabras.")
+}
 /**
  * Escribir un programa que pida al usuario un número entero positivo y muestre por
  * pantalla todos los números impares desde 1 hasta ese número separados por comas.
  */
-fun excepciones02(){}
+fun excepciones02(){
+    print("Escribe un número entero positivo: ")
+    try {
+        var num = readln().toInt()
+        if (num < 0) {
+            print("El número debe ser positivo.")
+        } else {
+            for (i in 1..num) {
+                if (i % 2 != 0) {
+                    print("$i, ")
+                }
+            }
+        }
+    } catch (e: NumberFormatException) {
+            print("Por favor, introduce un número válido.") }
+}
+
+
 
 /**
  * Escribir un programa que pida al usuario un número entero positivo y muestre por
  * pantalla la cuenta atrás desde ese número hasta cero separados por comas. Deberá
  * solicitar el número hasta introducir uno correcto.
  */
-fun excepciones03(){}
+fun excepciones03(){
+    print("Escribe un número entero positivo: ")
+    try {
+        var num = readln().toInt()
+        if (num < 0) {
+            print("El número debe ser positivo.")
+        } else {
+            for (i in num downTo 0) {
+                print("$i, ")
+
+            }
+        }
+    } catch (e: NumberFormatException) {
+        print("Por favor, introduce un número válido.") }
+}
 
 /**
  * Escribir un programa que pida al usuario un número entero, si la entrada no es
  * correcta, mostrará el mensaje "La entrada no es correcta" y lanzará la excepción
  * capturada.
  */
-fun excepciones04(){}
+fun excepciones04(){
+    println("Escribe un número entero positivo: ")
+    try {
+        val num = readln().toInt()
+        println("Entrada correcta.")
+    }catch (e: NumberFormatException) {
+        print("La entrada no es correcta") }
+}
 
 /**
  * Escribir un programa que pregunte al usuario los números ganadores de la lotería
  * primitiva, los almacene en una lista y los muestre por pantalla ordenados de menor
  * a mayor.
  */
-fun listas04(){}
+fun listas04(){
+    val numerosGanadores = mutableListOf<Int>()
+    while (numerosGanadores.size < 6) {
+        print("Introduce los números: ")
+        try {
+            val num = readln().toInt()
+            if (num !in 1..49 || num in numerosGanadores) {
+                println("**Error**")
+            } else {
+                numerosGanadores.add(num)
+            }
+        } catch (e: NumberFormatException) {
+            println("**Error**")
+        }
+    }
+    numerosGanadores.sort()
+    println("Los números ganadores ordenados de menor a mayor son: ${numerosGanadores.joinToString()}")
+}
 
 /**
  * Escribir un programa que almacene las asignaturas de un curso (por ejemplo
@@ -623,30 +738,85 @@ fun listas04(){}
  * la nota que ha sacado en cada asignatura y elimine de la lista las asignaturas aprobadas.
  * Al final el programa debe mostrar por pantalla las asignaturas que el usuario tiene que repetir.
  */
-fun listas06(){}
+fun listas06(){
+    val asignaturas = mutableListOf("Matemáticas", "Física", "Química", "Historia", "Lengua")
+    val suspensas = mutableListOf<String>()
+    for (asignatura in asignaturas) {
+        print("Introduce la nota de $asignatura: ")
+        try {
+            val nota = readln().toDouble()
+            if (nota < 5) {
+                suspensas.add(asignatura)
+            }
+        } catch (e: NumberFormatException) {
+            println("**Error**")
+        }
+    }
+    if (suspensas.isEmpty() ) print("Felicidades, no as suspendido ninguna") else print("Las asignaturas que as suspendido son: $suspensas")
+
+}
 
 /**
  * Escribir un programa que pida al usuario una palabra y muestre por pantalla si es un palíndromo.
  */
-fun listas08(){}
+fun listas08(){
+    print("Introduce una palabra: ")
+    val palabra = readln()
+    val esPalindromo = palabra == palabra.reversed()
+    if (esPalindromo) {
+        println("La palabra '$palabra' es un palíndromo.")
+    } else {
+        println("La palabra '$palabra' no es un palíndromo.")
+    }
+}
 
 /**
  * Escribir un programa que pida al usuario una palabra y muestre por pantalla el número de veces
  * que contiene cada vocal.
  */
-fun listas09(){}
+fun listas09(){
+    print("Introduce una palabra: ")
+    try {
+        val palabra = readln().lowercase()
+        val vocales = listOf('a', 'e', 'i', 'o', 'u')
+
+        for (vocal in vocales) {
+            val count = palabra.count { it == vocal }
+            println("La vocal '$vocal' aparece $count veces.")
+        }
+    } catch (e: Exception) {
+        println("**Error**")
+    }
+}
 
 /**
  * Escribir un programa que almacene en una lista los siguientes precios: 50, 75, 46, 22, 80, 65, 8
  * y muestre por pantalla el menor y el mayor de los precios.
  */
-fun listas10(){}
+fun listas10() {
+    val lista = mutableListOf(50, 75, 46, 22, 80, 65, 8)
+    lista.sort()
+    println("El número menor es ${lista.first()} y el mayor es ${lista.last()}")
+}
+
 
 /**
  * Escribir un programa que pregunte por una muestra de números, separados por comas, los guarde en
  * una lista y muestre por pantalla su media y desviación típica.
  */
-fun listas13(){}
+fun listas13() {
+    print("Dame números(separadas por comas): ")
+    val numeros = readln().split(",").map { it.trim().toDouble() }
+    val media = numeros.sum() / numeros.size
+    var sumatorio = 0.0
+    for (numero in numeros) {
+        sumatorio += (numero - media) * (numero - media)
+    }
+    val desviacionTipica = (sumatorio / numeros.size).let { var temp = it; var i = 0.0; while (i * i < temp) { i += 0.01 }; i }
+    println("La media es: $media")
+    println("La desviación típica es: $desviacionTipica")
+}
+
 
 /**
  * Escribir un programa que guarde en un diccionario los precios de las frutas de la tabla, pregunte
@@ -659,7 +829,23 @@ fun listas13(){}
  * Pera	0.85
  * Naranja	0.70
  */
-fun diccionario03(){}
+fun diccionario03(){
+    val precios = mapOf("Plátano" to 1.35, "Manzana" to 0.80, "Pera" to 0.85, "Naranja" to 0.70)
+    print("Introduce una fruta: ")
+    try {
+        val fruta = readln()
+        if (fruta in precios) {
+            print("Introduce el número de kilos: ")
+            val kilos = readln().toDouble()
+            val precio = precios[fruta]!! * kilos
+            println("El precio de $kilos kilos de $fruta es $precio.")
+        } else {
+            println("Lo siento, la fruta $fruta no está en el diccionario.")
+        }
+    } catch (e: Exception) {
+        println("**Error**")
+    }
+}
 
 /**
  * Escribir un programa que almacene el diccionario con los créditos de las asignaturas de un curso
@@ -668,14 +854,36 @@ fun diccionario03(){}
  * las asignaturas del curso, y <créditos> son sus créditos. Al final debe mostrar también el número
  * total de créditos del curso.
  */
-fun diccionario05(){}
+fun diccionario05(){
+    val creditos = mapOf("Matemáticas" to 6, "Física" to 4, "Química" to 5)
+    var totalCreditos = 0
+    for ((asignatura, creditosAsignatura) in creditos) {
+        println("$asignatura tiene $creditosAsignatura créditos")
+        totalCreditos += creditosAsignatura
+    }
+    println("El número total de créditos del curso es $totalCreditos.")
+}
 
 /**
  * Escribir un programa que cree un diccionario vacío y lo vaya llenado con información sobre una persona
  * (por ejemplo nombre, edad, sexo, teléfono, correo electrónico, etc.) que se le pida al usuario.
  * Cada vez que se añada un nuevo dato debe imprimirse el contenido del diccionario.
  */
-fun diccionario06(){}
+fun diccionario06(){
+    val info = mutableMapOf<String, String>()
+
+    while (true) {
+        print("Introduce el tipo de información (o 'fin' para terminar): ")
+        val clave = readln()
+        if (clave.lowercase() == "fin") {
+            return print(info)
+        }
+        print("Introduce la información correspondiente: ")
+        val valor = readln()
+        info[clave] = valor
+        println("Información actualizada: $info")
+    }
+}
 
 /**
  * Escribir un programa que cree un diccionario simulando una cesta de la compra. El programa debe preguntar
@@ -689,7 +897,26 @@ fun diccionario06(){}
  * …	…
  * Total	Coste
  */
-fun diccionario07(){}
+fun diccionario07(){
+    val cesta = mutableMapOf<String, Double>()
+    var total = 0.0
+    while (true) {
+        print("Introduce un artículo (o 'fin' para terminar): ")
+        val articulo = readln()
+        if (articulo.lowercase() == "fin") {
+            break
+        }
+        print("Introduce el precio de $articulo: ")
+        val precio = readln().toDouble()
+        cesta[articulo] = precio
+        total += precio
+    }
+    println("Lista de la compra")
+    for ((articulo, precio) in cesta) {
+        println("$articulo\t$precio")
+    }
+    println("Total\t$total")
+}
 
 /**
  * Escribir un programa que cree un diccionario de traducción español-inglés. El usuario introducirá las
@@ -698,7 +925,22 @@ fun diccionario07(){}
  * en español y utilizará el diccionario para traducirla palabra a palabra. Si una palabra no está en el
  * diccionario debe dejarla sin traducir.
  */
-fun diccionario08(){}
+fun diccionario08() {
+    print("Introduce las palabras en español e inglés separadas por dos puntos, y cada par separado por comas: ")
+    val entradas = readln().split(",")
+    val diccionario = mutableMapOf<String, String>()
+    for (entrada in entradas) {
+        val (espanol, ingles) = entrada.split(":").map { it.trim() }
+        diccionario[espanol] = ingles
+    }
+    print("Introduce una frase en español: ")
+    val frase = readln()
+    val traduccion = frase.split(" ").joinToString(" ") { palabra ->
+        diccionario[palabra] ?: palabra
+    }
+    println("La traducción de la frase es: $traduccion")
+}
+
 
 /**
  * Escribir un programa que permita gestionar la base de datos de clientes de una empresa. Los clientes se
@@ -716,7 +958,76 @@ fun diccionario08(){}
  * Mostrar la lista de clientes preferentes de la base de datos con su NIF y nombre.
  * Terminar el programa.
  */
-fun diccionario10(){}
+fun diccionario10() {
+    val clientes = mutableMapOf<String, MutableMap<String, Any>>()
+    while (true) {
+        println("""
+            Elige una opción:
+            (1) Añadir cliente
+            (2) Eliminar cliente
+            (3) Mostrar cliente
+            (4) Listar todos los clientes
+            (5) Listar clientes preferentes
+            (6) Terminar
+        """.trimIndent())
+        when (readln().toInt()) {
+            1 -> {
+                try {
+                    print("Introduce el NIF del cliente: ")
+                    val nif = readln()
+                    val datos = mutableMapOf<String, Any>()
+                    print("Introduce el nombre del cliente: ")
+                    datos["nombre"] = readln()
+                    print("Introduce la dirección del cliente: ")
+                    datos["dirección"] = readln()
+                    print("Introduce el teléfono del cliente: ")
+                    datos["teléfono"] = readln()
+                    print("Introduce el correo electrónico del cliente: ")
+                    datos["correo"] = readln()
+                    print("¿Es un cliente preferente? (s/n): ")
+                    datos["preferente"] = readln().lowercase() == "s"
+                    clientes[nif] = datos
+                } catch (e: Exception){
+                    println("**Error**")
+                }
+
+            }
+            2 -> {
+
+                print("Introduce el NIF del cliente a eliminar: ")
+                try {
+                    val nif = readln()
+                    clientes.remove(nif)
+                } catch (e: Exception){
+                    println("**Error**")
+                }
+            }
+            3 -> {
+                print("Introduce el NIF del cliente a mostrar: ")
+                try {
+                    val nif = readln()
+                    println(clientes[nif])
+                } catch (e: Exception){
+                    println("**Error**")
+                }
+            }
+            4 -> {
+                for ((nif, datos) in clientes) {
+                    println("$nif: ${datos["nombre"]}")
+                }
+            }
+            5 -> {
+                for ((nif, datos) in clientes) {
+                    if (datos["preferente"] as Boolean) {
+                        println("$nif: ${datos["nombre"]}")
+                    }
+                }
+            }
+            6 -> return
+        }
+    }
+}
+
 
 /**
  * El directorio de los clientes de una empresa está organizado en una cadena de texto como la de más
@@ -738,7 +1049,22 @@ fun diccionario10(){}
  * 'teléfono': '664888233', 'descuento': 5.2}, '98376547F': {'nombre': 'Carmen Sánchez', 'email': 'carmen@mail.com',
  * 'teléfono': '667677855', 'descuento': 15.7}}
  */
-fun diccionario11(){}
+fun diccionario11() {
+    val directorio = "nif;nombre;email;teléfono;descuento\n01234567L;Luis González;luisgonzalez@mail.com;656343576;12.5\n71476342J;Macarena Ramírez;macarena@mail.com;692839321;8\n63823376M;Juan José Martínez;juanjo@mail.com;664888233;5.2\n98376547F;Carmen Sánchez;carmen@mail.com;667677855;15.7"
+    val lineas = directorio.split("\n")
+    val campos = lineas[0].split(";")
+    val clientes = mutableMapOf<String, MutableMap<String, String>>()
+    for (linea in lineas.drop(1)) {
+        val datos = linea.split(";")
+        val cliente = mutableMapOf<String, String>()
+        for (i in 1 until campos.size) {
+            cliente[campos[i]] = datos[i]
+        }
+        clientes[datos[0]] = cliente
+    }
+    println(clientes)
+}
+
 
 /**
  * Suponer una lista con datos de las compras hechas por clientes de una empresa a lo largo de un mes, la cual
@@ -752,7 +1078,16 @@ fun diccionario11(){}
  * haber hecho más de una compra en el mes, por lo que la función debe retornar una estructura que contenga
  * cada domicilio una sola vez.
  */
-fun conjuntos01(){}
+fun conjuntos01() {
+    val compras = listOf(listOf("Nuria Costa", 5, 12780.78, "Calle Las Flores 355"), listOf("Jorge Russo", 7, 699, "Mirasol 218"), listOf("Nuria Costa", 7, 532.90, "Calle Las Flores 355"), listOf("Julián Rodriguez", 12, 5715.99, "La Mancha 761"), listOf("Jorge Russo", 15, 958, "Mirasol 218"))
+    val domicilios = mutableSetOf<String>()
+    for (compra in compras) {
+        domicilios.add(compra[3] as String)
+    }
+    println("Los domicilios a los que se debe enviar una factura son: ${domicilios.joinToString()}")
+}
+
+
 
 /**
  * Solicitar al usuario que introduzca los nombres de pila de los alumnos de primaria de una escuela,
@@ -764,7 +1099,48 @@ fun conjuntos01(){}
  * Mostrar qué nombres de primaria no se repiten en los de nivel secundaria.
  * Mostrar si todos los nombres de primaria están incluidos en secundaria.
  */
-fun conjuntos02(){}
+fun conjuntos02() {
+    val alumnosPrimaria = mutableSetOf<String>()
+    val alumnosSecundaria = mutableSetOf<String>()
+
+    println("Introduce los nombres de los alumnos de primaria (termina con 'x'):")
+    while (true) {
+        try {
+            val nombre = readln()
+            if (nombre.lowercase() == "x") break
+            alumnosPrimaria.add(nombre)
+        } catch (e: Exception){
+            print("**error**")
+        }
+    }
+
+    println("Introduce los nombres de los alumnos de secundaria (termina con 'x'):")
+    while (true) {
+        try {
+            val nombre = readln()
+            if (nombre.lowercase() == "x") break
+            alumnosSecundaria.add(nombre)
+        } catch (e: Exception){
+            print("**error**")
+        }
+    }
+
+    println("Alumnos de primaria: ${alumnosPrimaria.joinToString()}")
+    println("Alumnos de secundaria: ${alumnosSecundaria.joinToString()}")
+
+    val repetidos = alumnosPrimaria.intersect(alumnosSecundaria)
+    println("Nombres que se repiten: ${repetidos.joinToString()}")
+
+    val noRepetidos = alumnosPrimaria.subtract(alumnosSecundaria)
+    println("Nombres de primaria que no se repiten en secundaria: ${noRepetidos.joinToString()}")
+
+    if (alumnosPrimaria.all { it in alumnosSecundaria }) {
+        println("Todos los nombres de primaria están incluidos en secundaria.")
+    } else {
+        println("No todos los nombres de primaria están incluidos en secundaria.")
+    }
+}
+
 
 /**
  * El conjunto potencia de un conjunto S es el conjunto de todos los subconjuntos de S.
@@ -778,7 +1154,20 @@ fun conjuntos02(){}
  * >>> conjunto_potencia({6, 1, 4})
  * [set(), set([6]), set([1]), set([4]), set([6, 1]), set([6, 4]), set([1, 4]), set([6, 1, 4])]
  */
-fun conjuntos03(){}
+fun conjuntos03() {
+    val conjunto = setOf(6, 1, 4)
+    val conjuntoPotencia = mutableSetOf<Set<Int>>()
+    conjuntoPotencia.add(emptySet())
+    for (elemento in conjunto) {
+        val nuevosSubconjuntos = mutableSetOf<Set<Int>>()
+        for (subconjunto in conjuntoPotencia) {
+            nuevosSubconjuntos.add(subconjunto + elemento)
+        }
+        conjuntoPotencia.addAll(nuevosSubconjuntos)
+    }
+    println(conjuntoPotencia)
+}
+
 
 /**
  * Dadas las siguientes listas:
@@ -793,7 +1182,19 @@ fun conjuntos03(){}
  * Encuentra las frutas que están en frutas2 pero no en frutas1 y guárdalas en un
  * conjunto llamado frutas_solo_en_frutas2.
  */
-fun conjuntos04(){}
+fun conjuntos04() {
+    val frutas1 = setOf("manzana", "pera", "naranja", "plátano", "uva")
+    val frutas2 = setOf("manzana", "pera", "durazno", "sandía", "uva")
+
+    val frutas_comunes = frutas1.intersect(frutas2)
+    val frutas_solo_en_frutas1 = frutas1.subtract(frutas2)
+    val frutas_solo_en_frutas2 = frutas2.subtract(frutas1)
+
+    println("Frutas comunes: $frutas_comunes")
+    println("Frutas solo en frutas1: $frutas_solo_en_frutas1")
+    println("Frutas solo en frutas2: $frutas_solo_en_frutas2")
+}
+
 
 /**
  * Dado el conjunto de números enteros:
@@ -805,7 +1206,16 @@ fun conjuntos04(){}
  * Encuentra la intersección entre los conjuntos pares y multiplos_de_tres y
  * guárdala en un conjunto llamado pares_y_multiplos_de_tres.
  */
-fun conjuntos05(){}
+fun conjuntos05() {
+    val numeros = setOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val pares = numeros.filter { it % 2 == 0 }.toSet()
+    val multiplosDeTres = numeros.filter { it % 3 == 0 }.toSet()
+    val paresYMultiplosDeTres = pares.intersect(multiplosDeTres)
+    println("Pares: $pares")
+    println("Múltiplos de tres: $multiplosDeTres")
+    println("Pares y múltiplos de tres: $paresYMultiplosDeTres")
+}
+
 
 /**
  * Dado el conjunto de letras:
@@ -819,7 +1229,17 @@ fun conjuntos05(){}
  * con conjuntos en Python. ¡Espero que te sean útiles! Si tienes alguna pregunta
  * o necesitas más ejercicios, no dudes en decírmelo.
  */
-fun conjuntos06(){}
+fun conjuntos06() {
+    val vocales = setOf('a', 'e', 'i', 'o', 'u')
+    val alfabeto = ('a'..'z').toSet()
+    val consonantes = alfabeto - vocales
+    val letras_comunes = vocales.intersect(consonantes)
+
+    println("Vocales: $vocales")
+    println("Consonantes: $consonantes")
+    println("Letras comunes: $letras_comunes")
+}
+
 
 
 
